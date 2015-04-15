@@ -26,7 +26,7 @@
 
 /*
  * in: buffer to compress
- * out: buffer to put compressed data
+ * out: buffer to store compressed data
  * in_size: input buffer size in bytes
  * 
  * return value: size of compressed data in bytes
@@ -41,7 +41,7 @@ size_t xrle_compress(void * out,const void * in,size_t in_size);
 
 /*
  * in: buffer to decompress
- * out: buffer to put decompressed data
+ * out: buffer to store decompressed data
  * in_size: input buffer size in bytes
  * 
  * return value: size of decompressed data in bytes
