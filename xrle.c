@@ -24,13 +24,13 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* 
+/*
  *	Format:
  *	     32 bits		32 bits                      64 bits
  * 	+----------------+---------------+----------+----------------+
  * 	| literal length | repeat length | literals | word to repeat |
  * 	+----------------+---------------+----------+----------------+
- * 
+ *
  */
 
 #include <stdint.h>
@@ -54,7 +54,7 @@ size_t xrle_compress(void * out,const void * in,size_t in_size)
 		descr = (U32 *)out_pos;
 		out_pos++;
 		next = *in_pos;
-		
+
 		do{
 			in_pos++;
 			previous = next;
@@ -71,7 +71,7 @@ size_t xrle_compress(void * out,const void * in,size_t in_size)
 				goto end_all;
 
 		}while(previous == *in_pos);
-		
+
 		/* encode */
 		descr[0] = out_pos - ((U64 *)descr) - 2;
 		descr[1] = repeat;
@@ -91,7 +91,7 @@ size_t xrle_decompress(void * out,const void * in,size_t in_size)
 	U64 *in_pos = (U64 *) in,*out_pos = (U64 *) out,word,tmp;
 	U32 tail = in_size & 7,lit_len,repeat,i;
 	U64 *in_limit = (U64 *)((char *)in + in_size - tail);
-	
+
 	if(in_size < 16){
 		memcpy(out,in,in_size);
 		return in_size;

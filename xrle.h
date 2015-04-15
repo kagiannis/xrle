@@ -28,13 +28,13 @@
  * in: buffer to compress
  * out: buffer to store compressed data
  * in_size: input buffer size in bytes
- * 
+ *
  * return value: size of compressed data in bytes
- * 
+ *
  * Input and output buffers must point to 8 byte aligned data.
- * Otherwise compression function ,depending on the platform,can be 
+ * Otherwise compression function ,depending on the platform,can be
  * slower or even crash.
- * 
+ *
  * input buffer must be less than 32 GB
  */
 size_t xrle_compress(void * out,const void * in,size_t in_size);
@@ -43,11 +43,11 @@ size_t xrle_compress(void * out,const void * in,size_t in_size);
  * in: buffer to decompress
  * out: buffer to store decompressed data
  * in_size: input buffer size in bytes
- * 
+ *
  * return value: size of decompressed data in bytes
- * 
+ *
  * Input and output buffers must point to 8 byte aligned data.
- * Otherwise decompression function ,depending on the platform,can be 
+ * Otherwise decompression function ,depending on the platform,can be
  * slower or even crash.
  */
 size_t xrle_decompress(void * out,const void * in,size_t in_size);
