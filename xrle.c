@@ -25,6 +25,14 @@
  */
 
 /*
+ * 	Files created with this tool are not endian agnostic.
+ *
+ * 	Header:
+ *           32 bits
+ *      +--------------+
+ *      | size of file |
+ *      +--------------+
+ *
  *      Format:
  *           32 bits	      32 bits                    64 bits
  *      +----------------+---------------+----------+----------------+
@@ -36,14 +44,17 @@
 #include <stdint.h>
 #include <string.h>
 
-#define U64 uint64_t
-#define U32 uint32_t
+typedef uint64_t U64;
+typedef uint32_t U32;
 
 size_t xrle_compress(void * out,const void * in,size_t in_size)
 {
 	U64 *in_pos = (U64 *) in,*out_pos = (U64 *) out;
 	U32 tail = in_size & 7,*descr,repeat;
 	U64 *in_limit = (U64 *)((char *)in + in_size - tail),previous,next;
+
+	*out_pos = in_size;
+	out_pos++;
 
 	if(in_size < 16){
 		memcpy(out,in,in_size);
@@ -85,12 +96,21 @@ end_all:
 	return (char *)out_pos - (char *)out + tail;
 }
 
+U32 xrle_getsz(const void * in)
+{
+	U32 expected;
+	memcpy(&expected, in, sizeof(expected));
+	return expected;
+}
+
 size_t xrle_decompress(void * out,const void * in,size_t in_size)
 {
 
 	U64 *in_pos = (U64 *) in,*out_pos = (U64 *) out,word,tmp;
 	U32 tail = in_size & 7,lit_len,repeat,i;
 	U64 *in_limit = (U64 *)((char *)in + in_size - tail);
+
+	in_pos++;
 
 	if(in_size < 16){
 		memcpy(out,in,in_size);

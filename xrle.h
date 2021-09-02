@@ -39,6 +39,8 @@
  */
 size_t xrle_compress(void * out,const void * in,size_t in_size);
 
+size_t xrle_getsz(const void * in);
+
 /*
  * in: buffer to decompress
  * out: buffer to store decompressed data
@@ -53,4 +55,4 @@ size_t xrle_compress(void * out,const void * in,size_t in_size);
 size_t xrle_decompress(void * out,const void * in,size_t in_size);
 
 /* This macro returns the maximum size of compressed data in bytes */
-#define xrle_max_out(A) ((A) + 8)
+#define xrle_max_out(A) ((A) + 8 + 4)
